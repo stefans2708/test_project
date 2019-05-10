@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WifiActivity extends AppCompatActivity {
@@ -69,10 +70,18 @@ public class WifiActivity extends AppCompatActivity {
                     Toast.makeText(WifiActivity.this, "result size: " + scanResults.size(), Toast.LENGTH_SHORT).show();
 
                     String bssid = wifiManager.getConnectionInfo().getBSSID();
-                    recyclerViewNetworks.setAdapter(new NetworkAdapter(scanResults, bssid));
+                    recyclerViewNetworks.setAdapter(new NetworkAdapter(getNetworkInfo(scanResults), bssid));
                 }
             }
         }
     };
+
+    private List<NetworkInfo> getNetworkInfo(List<ScanResult> scanResults) {
+        List<NetworkInfo> result = new ArrayList<>();
+        for (ScanResult scanResult : scanResults) {
+            result.add(new NetworkInfo(scanResult.SSID, scanResult.BSSID, scanResult.level));
+        }
+        return result;
+    }
 
 }

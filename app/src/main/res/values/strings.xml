@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TestProject</string>
     <string name="scan_networks">Scan networks</string>
+    <string name="turn_wifi">Turn wifi on/off</string>
 </resources>
