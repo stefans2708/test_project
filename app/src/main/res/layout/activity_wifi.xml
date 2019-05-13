@@ -42,8 +42,17 @@
         android:layout_margin="@dimen/dimen_side_padding"
         android:text="@string/scan_networks"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_disconnect"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_side_padding"
+        android:text="@string/disconnect"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_wifi_scan_result" />
+        app:layout_constraintStart_toEndOf="@+id/btn_scan" />
 
 </android.support.constraint.ConstraintLayout>

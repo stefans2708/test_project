@@ -4,12 +4,15 @@ public class NetworkInfo {
 
     private String ssid;
     private String bssid;
-    private String level;
+    private int level;
+    private String password;
+    private boolean isSecured;
 
-    public NetworkInfo(String ssid, String bssid, int level) {
+    public NetworkInfo(String ssid, String bssid, int level, boolean isSecured) {
         this.ssid = ssid;
         this.bssid = bssid;
         this.level = level;
+        this.isSecured = isSecured;
     }
 
     public String getSsid() {
@@ -28,11 +31,27 @@ public class NetworkInfo {
         this.bssid = bssid;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isSecured() {
+        return isSecured;
+    }
+
+    public void setSecured(boolean secured) {
+        isSecured = secured;
     }
 }

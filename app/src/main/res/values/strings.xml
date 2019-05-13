@@ -2,4 +2,10 @@
     <string name="app_name">TestProject</string>
     <string name="scan_networks">Scan networks</string>
     <string name="turn_wifi">Turn wifi on/off</string>
+    <string name="wifi_image_name">ic_signal_wifi_%1$d_bar_black_24dp</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="enter_password">Enter password</string>
+    <string name="password">Password</string>
+    <string name="connect">Connect</string>
+    <string name="cancel">Cancel</string>
 </resources>

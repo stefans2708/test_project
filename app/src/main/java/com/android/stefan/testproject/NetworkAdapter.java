@@ -15,10 +15,12 @@ public class NetworkAdapter extends RecyclerView.Adapter<NetworkAdapter.NetworkV
 
     private List<NetworkInfo> networks;
     private String bssidOfConnectedNetwork;
+    private OnNetworkClickListener listener;
 
-    public NetworkAdapter(List<NetworkInfo> networks, String bssid) {
+    public NetworkAdapter(List<NetworkInfo> networks, String bssid, OnNetworkClickListener listener) {
         this.networks = networks;
         this.bssidOfConnectedNetwork = bssid;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,10 +32,16 @@ public class NetworkAdapter extends RecyclerView.Adapter<NetworkAdapter.NetworkV
     @Override
     public void onBindViewHolder(@NonNull NetworkViewHolder networkViewHolder, int i) {
         NetworkInfo network = networks.get(i);
+
         networkViewHolder.txtNetworkName.setText(network.getSsid());
-        networkViewHolder.f2.setText(network.getBssid());
+        networkViewHolder.securityInfo.setText(network.isSecured() ? "Secured" : "Open");
         networkViewHolder.itemView.setBackgroundColor(network.getBssid().equals(bssidOfConnectedNetwork) ?
                 networkViewHolder.itemView.getContext().getResources().getColor(R.color.colorCurrentNetworkItem) : Color.WHITE);
+
+        String imgName = networkViewHolder.itemView.getContext().getString(R.string.wifi_image_name, network.getLevel());
+        networkViewHolder.imgSignalStrength.setImageResource(
+                networkViewHolder.itemView.getContext().getResources().getIdentifier(imgName, "drawable", networkViewHolder.itemView.getContext().getPackageName())
+        );
     }
 
     @Override
@@ -41,17 +49,36 @@ public class NetworkAdapter extends RecyclerView.Adapter<NetworkAdapter.NetworkV
         return networks == null ? 0 : networks.size();
     }
 
+    public void removeAll() {
+        networks.clear();
+        notifyDataSetChanged();
+    }
+
     class NetworkViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtNetworkName;
-        ImageView imfSignalStrength;
-        TextView f2;
+        ImageView imgSignalStrength;
+        TextView securityInfo;
 
         NetworkViewHolder(@NonNull View itemView) {
             super(itemView);
             txtNetworkName = itemView.findViewById(R.id.txt_network_name);
-            imfSignalStrength = itemView.findViewById(R.id.img_network_signal);
-            f2 = itemView.findViewById(R.id.txt_field2);
+            imgSignalStrength = itemView.findViewById(R.id.img_network_signal);
+            securityInfo = itemView.findViewById(R.id.txt_field2);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null) {
+                        listener.onNetworkClick(networks.get(getAdapterPosition()));
+                    }
+                }
+            });
         }
+
+    }
+
+    public interface OnNetworkClickListener {
+        void onNetworkClick(NetworkInfo network);
     }
 }
